@@ -1,45 +1,60 @@
 
-# steps
-# 1. bring in .a library from minilib
-# 2. bring in libft.a
-# 3. have the makefile make minilib & libft to create the .a file
-# 4. include minilib, libft and includes
-# 5. have the makefile clean all the folders
-
-
 NAME = fractol
 
-C_FILES		= main.c
-SRCDIR		= srcs
-SRCS		= $(addprefix $(SRCDIR)/,$(C_FILES))
-
-CFLAGS		= -g3 -Iincludes -Iminilibx-linux -lmlx -lXext -lX11 -Lmlx_linux
+CFLAGS		= -g3
 COMPILER	= gcc
 
-MLX			= libmlx.a
-MLXDIR		= minilibx-linux
+C_FILES		= main.c
+SRCDIR		= srcs/
+SRCS		= $(SRCDIR)$(C_FILES)
 
-LIBFT		= libft.a
-LIBFTDIR	= libft
+OBJDIR		= obj/
+OFILES		= $(C_FILES:.c=.o)
+OBJS		= $(OBJDIR)$(OFILES)
 
-$(MLX)
-	@echo "Making minilibx..."
-	make -sC $(MLXDIR)
+MLX_LIB		= libmlx.a
+MLXDIR		= minilibx-linux/
+MLX			= $(MLXDIR)$(MLX_LIB)
 
-$(LIBFT)
-	@echo "Making libft..."
-	make -sC $(LIBFTDIR)
+LIBFT_LIB	= libft.a
+LIBFTDIR	= libft/
+LIBFT		= $(LIBFTDIR)$(LIBFT_LIB)
 
-$(NAME):
-	$(COMPILER) $(CFLAGS) $(SRCS) -o $(NAME)
+INCS		= -I ./includes/\
+			  -I ./libft/\
+			  -I ./minilibx-linux/
 
 all: $(MLX) $(LIBFT) $(NAME)
 
-clean:
-	rm -f $(SRCDIR)/*.o
+$(OBJDIR)%.o: $(SRCDIR)%.c
+	@$(COMPILER) $(CFLAGS) -c $< -o $@ $(INCS)
 
-flcean: clean
-	rm -f $(NAME)
+$(OBJS): $(OBJDIR)
+
+$(OBJDIR):
+	@mkdir $(OBJDIR)
+
+$(MLX):
+	@echo "Making minilibx..."
+	@make -sC $(MLXDIR)
+
+$(LIBFT):
+	@echo "Making libft..."
+	@make -sC $(LIBFTDIR)
+
+$(NAME): $(OBJS) $(MLX) $(LIBFT)
+	$(COMPILER) $(CFLAGS) -o $(NAME) $(OBJS) $(MLX) $(LIBFT) $(INC) -lXext -lX11 -lm
+
+clean:
+	@echo "Cleaning objects..."
+	@rm -rf $(OBJDIR)
+	@make clean -C $(MLXDIR)
+	@make clean -C $(LIBFTDIR)
+
+fclean: clean
+	@echo "Removing fractol program..."
+	@rm -f $(NAME)
+	@rm -f $(LIBFTDIR)$(LIBFT_LIB)
 
 re: fclean all
 
