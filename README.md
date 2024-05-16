@@ -1,7 +1,7 @@
 # 42 - Fractol
 
 <p align="center">
-  <img src="https://github.com/BenjaminHThomas/fractol/assets/72560121/90710147-d9e0-4050-a31d-886df7c0e3ec" />
+  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Mandel_zoom_00_mandelbrot_set.jpg/1280px-Mandel_zoom_00_mandelbrot_set.jpg" />
 </p>
 
 This is project to create an interactive Mandelbrot and Julia set in C using 42's minilibx API (X11).
