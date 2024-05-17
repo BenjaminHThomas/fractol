@@ -1,61 +1,61 @@
-
 NAME = fractol
 
-CFLAGS		= -g3
-COMPILER	= gcc
+CFLAGS = -g3 -Wall -Werror -Wextra
+COMPILER = gcc
 
-C_FILES		= main.c
-SRCDIR		= srcs/
-SRCS		= $(SRCDIR)$(C_FILES)
+C_FILES = main.c \
+		  mlx_utils.c
 
-OBJDIR		= obj/
-OFILES		= $(C_FILES:.c=.o)
-OBJS		= $(OBJDIR)$(OFILES)
+SRCDIR = srcs/
+SRCS = $(addprefix $(SRCDIR), $(C_FILES))
 
-MLX_LIB		= libmlx.a
-MLXDIR		= minilibx-linux/
-MLX			= $(MLXDIR)$(MLX_LIB)
+OBJDIR = obj/
+OBJS = $(addprefix $(OBJDIR), $(C_FILES:.c=.o))
 
-LIBFT_LIB	= libft.a
-LIBFTDIR	= libft/
-LIBFT		= $(LIBFTDIR)$(LIBFT_LIB)
+MLX_LIB = libmlx.a
+MLXDIR = minilibx-linux/
+MLX = $(MLXDIR)$(MLX_LIB)
 
-INCS		= -I ./includes/\
-			  -I ./libft/\
-			  -I ./minilibx-linux/
+LIBFT_LIB = libft.a
+LIBFTDIR = libft/
+LIBFT = $(LIBFTDIR)$(LIBFT_LIB)
 
-all: $(MLX) $(LIBFT) $(NAME)
+INCS =	-I ./includes/\
+		-I ./libft/\
+		-I ./minilibx-linux/
 
-$(OBJDIR)%.o: $(SRCDIR)%.c
-	@$(COMPILER) $(CFLAGS) -c $< -o $@ $(INCS)
+all: $(OBJDIR) $(MLX) $(LIBFT) $(NAME)
 
-$(OBJS): $(OBJDIR)
+$(OBJDIR)%.o: $(SRCDIR)%.c | $(OBJDIR)
+	$(COMPILER) $(CFLAGS) -c $< -o $@ $(INCS)
 
 $(OBJDIR):
-	@mkdir $(OBJDIR)
+	mkdir -p $(OBJDIR)
 
 $(MLX):
-	@echo "Making minilibx..."
-	@make -sC $(MLXDIR)
+	echo "Making minilibx..."
+	make -C $(MLXDIR)
 
 $(LIBFT):
-	@echo "Making libft..."
-	@make -sC $(LIBFTDIR)
+	echo "Making libft..."
+	make -C $(LIBFTDIR)
 
 $(NAME): $(OBJS) $(MLX) $(LIBFT)
-	$(COMPILER) $(CFLAGS) -o $(NAME) $(OBJS) $(MLX) $(LIBFT) $(INC) -lXext -lX11 -lm
+	$(COMPILER) $(CFLAGS) -o $(NAME) $(OBJS) $(MLX) $(LIBFT) -lXext -lX11 -lm
 
 clean:
-	@echo "Cleaning objects..."
-	@rm -rf $(OBJDIR)
-	@make clean -C $(MLXDIR)
-	@make clean -C $(LIBFTDIR)
+	echo "Cleaning objects..."
+	rm -rf $(OBJDIR)
+	make clean -C $(MLXDIR)
+	make clean -C $(LIBFTDIR)
 
 fclean: clean
-	@echo "Removing fractol program..."
-	@rm -f $(NAME)
-	@rm -f $(LIBFTDIR)$(LIBFT_LIB)
+	echo "Removing fractol program..."
+	rm -f $(NAME)
+	make fclean -C $(LIBFTDIR)
+	make clean -C $(MLXDIR)
 
 re: fclean all
 
 .PHONY: all clean fclean re
+
