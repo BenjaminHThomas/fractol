@@ -17,6 +17,13 @@ The underlying function behind the graph is:
 so for example if z == 2 & c == 0, iterating this function would look like:
   4, 16, 256, 65536 .... and so on until infinity.
 
+With c being a complex number. The complex number has a real component and an imaginary component. c = a + bi with i being equal to the square root of -1.
+If you're the same as me, you were probably quite confused by this because negative square roots aren't really possible. But that's the whole point, it's an abstraction.
+The same way negative numbers aren't real, but they help us understand things better.
+
+There's a really interesting video by veritasium here if you're interested:
+\t https://www.youtube.com/watch?v=cUzklzVXJwo
+
 And that's where the central idea comes into play:
 - Julia sets:        when iterating values of z, which are stable and which iterate to infinity?
 - Mandelbrot sets:   when iterating values of c, which are stable and which iterate to infinity?
