@@ -6,25 +6,31 @@
 /*   By: bthomas <bthomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 10:36:02 by bthomas           #+#    #+#             */
-/*   Updated: 2024/05/17 10:48:30 by bthomas          ###   ########.fr       */
+/*   Updated: 2024/05/18 19:39:36 by bthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_fractol.h"
 
+static void	initialise(t_mlx_data *mlx)
+{
+	ft_memset(mlx, 0, sizeof(mlx));
+	mlx->mlx = mlx_init();
+	mlx->win = mlx_new_window(mlx->mlx, WINWIDTH, WINHEIGHT, "Hello world");
+	mlx->img = mlx_new_image(mlx->mlx, WINWIDTH, WINHEIGHT);
+	mlx->addr = mlx_get_data_addr(mlx->img, &mlx->bpp, &mlx->linelen,
+			&mlx->endian);
+}
+
 int	main(void)
 {
-	void	*mlx;
-	void	*mlx_win;
-	t_data	img;
+	t_mlx_data	mlx;
 
-	mlx = mlx_init();
-	mlx_win = mlx_new_window(mlx, 1920, 1080, "Hello world");
-	img.img = mlx_new_image(mlx, 1920, 1080);
-	img.addr = mlx_get_data_addr(img.img, &img.bpp, &img.linelen,
-			&img.endian);
-	my_mlx_pixel_put(&img, 5, 5, 0x00FF0000);
-	mlx_put_image_to_window(mlx, mlx_win, img.img, 0, 0);
-	mlx_loop(mlx);
+	initialise(&mlx);
+	fill_image(&mlx);
+	mlx_put_image_to_window(mlx.mlx, mlx.win, mlx.img, 0, 0);
+	mlx_key_hook(mlx.win, keypress, &mlx);
+	mlx_hook(mlx.win, 17, 0, clean_close, &mlx);
+	mlx_loop(mlx.mlx);
 	return (0);
 }

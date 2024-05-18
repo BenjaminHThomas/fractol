@@ -6,16 +6,37 @@
 /*   By: bthomas <bthomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 10:03:21 by bthomas           #+#    #+#             */
-/*   Updated: 2024/05/17 10:21:49 by bthomas          ###   ########.fr       */
+/*   Updated: 2024/05/18 19:26:16 by bthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_fractol.h"
+#include <stdio.h>
 
-void	my_mlx_pixel_put(t_data *data, int x, int y, int colour)
+int	clean_close(t_mlx_data *mlx)
+{
+	if (mlx->img)
+		mlx_destroy_image(mlx->mlx, mlx->img);
+	if (mlx->win)
+		mlx_destroy_window(mlx->mlx, mlx->win);
+	mlx_loop_end(mlx->mlx);
+	mlx_destroy_display(mlx->mlx);
+	free(mlx->mlx);
+	exit(1);
+	return (0);
+}
+
+int	keypress(int keycode, t_mlx_data *mlx)
+{
+	if (keycode == KEY_ESC)
+		clean_close(mlx);
+	return (0);
+}
+
+void	custom_pixel_put(t_mlx_data *mlx, int x, int y, int colour)
 {
 	char	*dst;
 
-	dst = data->addr + (y * data->linelen + x * (data->bpp / 8));
+	dst = mlx->addr + (y * mlx->linelen + x * (mlx->bpp / 8));
 	*(unsigned int *)dst = colour;
 }

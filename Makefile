@@ -4,7 +4,9 @@ CFLAGS = -g3 -Wall -Werror -Wextra
 COMPILER = gcc
 
 C_FILES = main.c \
-		  mlx_utils.c
+		  mlx_utils.c \
+		  calculations.c \
+		  image_utils.c
 
 SRCDIR = srcs/
 SRCS = $(addprefix $(SRCDIR), $(C_FILES))
@@ -34,26 +36,26 @@ $(OBJDIR):
 
 $(MLX):
 	echo "Making minilibx..."
-	make -C $(MLXDIR)
+	@make -C $(MLXDIR)
 
 $(LIBFT):
 	echo "Making libft..."
-	make -C $(LIBFTDIR)
+	@make -C $(LIBFTDIR)
 
 $(NAME): $(OBJS) $(MLX) $(LIBFT)
 	$(COMPILER) $(CFLAGS) -o $(NAME) $(OBJS) $(MLX) $(LIBFT) -lXext -lX11 -lm
 
 clean:
 	echo "Cleaning objects..."
-	rm -rf $(OBJDIR)
-	make clean -C $(MLXDIR)
-	make clean -C $(LIBFTDIR)
+	@rm -rf $(OBJDIR)
+	@make clean -C $(MLXDIR)
+	@make clean -C $(LIBFTDIR)
 
 fclean: clean
 	echo "Removing fractol program..."
-	rm -f $(NAME)
-	make fclean -C $(LIBFTDIR)
-	make clean -C $(MLXDIR)
+	@rm -f $(NAME)
+	@make fclean -C $(LIBFTDIR)
+	@make clean -C $(MLXDIR)
 
 re: fclean all
 
