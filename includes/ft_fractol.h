@@ -6,7 +6,7 @@
 /*   By: bthomas <bthomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 10:36:17 by bthomas           #+#    #+#             */
-/*   Updated: 2024/05/18 19:36:14 by bthomas          ###   ########.fr       */
+/*   Updated: 2024/05/18 19:54:54 by bthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # define SCALE_Y (MAXI - MINI) / (WINHEIGHT - 1)
 # define BLACKHEX 0x00000000
 # define KEY_ESC 65307
+# define KEY_XBUTT 17
 # define MOUSE_WHL_DWN 5
 # define MOUSE_WHL_UP 4
 # include <stdlib.h>
