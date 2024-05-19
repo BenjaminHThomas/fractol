@@ -6,7 +6,7 @@
 /*   By: bthomas <bthomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 10:03:21 by bthomas           #+#    #+#             */
-/*   Updated: 2024/05/18 19:26:16 by bthomas          ###   ########.fr       */
+/*   Updated: 2024/05/19 15:33:15 by bthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,17 @@ int	keypress(int keycode, t_mlx_data *mlx)
 {
 	if (keycode == KEY_ESC)
 		clean_close(mlx);
+	return (0);
+}
+
+int	mouse_scroll(int button, int x, int y, t_mlx_data *mlx)
+{
+	if (button == MOUSE_WHL_DWN || button == MOUSE_WHL_UP)
+	{
+		mlx_mouse_get_pos(mlx->mlx, mlx->win, &x, &y);
+		update_scale(mlx, button, x, y);
+		refresh_image(mlx);
+	}
 	return (0);
 }
 

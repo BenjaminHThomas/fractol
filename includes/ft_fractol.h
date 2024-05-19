@@ -6,22 +6,16 @@
 /*   By: bthomas <bthomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 10:36:17 by bthomas           #+#    #+#             */
-/*   Updated: 2024/05/18 19:54:54 by bthomas          ###   ########.fr       */
+/*   Updated: 2024/05/19 16:57:01 by bthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_FRACTOL_H
 # define FT_FRACTOL_H
 
-# define MAX_ITER 40
+# define MAX_ITER 50
 # define WINWIDTH 1080
 # define WINHEIGHT 720
-# define MINX -2.5
-# define MAXX 1.5
-# define MINI -1.5
-# define MAXI 1.5
-# define SCALE_X (MAXX - MINX) / (WINWIDTH - 1)
-# define SCALE_Y (MAXI - MINI) / (WINHEIGHT - 1)
 # define BLACKHEX 0x00000000
 # define KEY_ESC 65307
 # define KEY_XBUTT 17
@@ -57,13 +51,19 @@
  */
 typedef struct s_mlx_data
 {
-	void	*mlx;
-	void	*win;
-	void	*img;
-	char	*addr;
-	int		bpp;
-	int		linelen;
-	int		endian;
+	void		*mlx;
+	void		*win;
+	void		*img;
+	char		*addr;
+	int			bpp;
+	int			linelen;
+	int			endian;
+	long double	MINX;
+	long double	MAXX;
+	long double	MINI;
+	long double	MAXI;
+	long double	SCALE_X;
+	long double	SCALE_Y;
 }	t_mlx_data;
 
 typedef struct s_complex
@@ -78,5 +78,8 @@ int		get_colour(double n);
 void	fill_image(t_mlx_data *mlx);
 int		keypress(int keycode, t_mlx_data *mlx);
 int		clean_close(t_mlx_data *mlx);
+int		mouse_scroll(int button, int x, int y, t_mlx_data *mlx);
+void	update_scale(t_mlx_data *mlx, int button, int x, int y);
+void	refresh_image(t_mlx_data *mlx);
 
 #endif
