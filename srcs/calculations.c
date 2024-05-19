@@ -6,7 +6,7 @@
 /*   By: bthomas <bthomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 11:01:18 by bthomas           #+#    #+#             */
-/*   Updated: 2024/05/18 16:19:19 by bthomas          ###   ########.fr       */
+/*   Updated: 2024/05/19 20:24:39 by bthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,9 @@
 
 int	mandelbrot(t_complex c)
 {
-	t_complex	z;
-	int			n;
-	double		temp_x;
+	t_complex		z;
+	int				n;
+	long double		temp_x;
 
 	z.x = 0;
 	z.i = 0;

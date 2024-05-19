@@ -6,7 +6,7 @@
 /*   By: bthomas <bthomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 16:09:54 by bthomas           #+#    #+#             */
-/*   Updated: 2024/05/19 16:10:46 by bthomas          ###   ########.fr       */
+/*   Updated: 2024/05/19 21:51:54 by bthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,17 +37,14 @@ void	update_scale(t_mlx_data *mlx, int button, int x, int y)
 	mlx->MAXI = y_offset + (mlx->MAXI - y_offset) * zoom_fact;
 	mlx->SCALE_X = (mlx->MAXX - mlx->MINX) / (WINWIDTH - 1);
 	mlx->SCALE_Y = (mlx->MAXI - mlx->MINI) / (WINHEIGHT - 1);
-	printf("x %d y %d\n", x, y);
-	printf("x_offset %Lf y_offset %Lf\n", x_offset, y_offset);
-	printf("minx %Lf maxx %Lf mini %Lf maxi %Lf\n", mlx->MINX, mlx->MAXX, mlx->MINI, mlx->MAXI);
 }
 
 void	fill_image(t_mlx_data *mlx)
 {
 	long double		x;
 	long double		y;
-	t_complex	c;
-	int			n;
+	t_complex		c;
+	int				n;
 
 	x = 0;
 	while (x <= WINWIDTH)

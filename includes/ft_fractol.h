@@ -6,7 +6,7 @@
 /*   By: bthomas <bthomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 10:36:17 by bthomas           #+#    #+#             */
-/*   Updated: 2024/05/19 16:57:01 by bthomas          ###   ########.fr       */
+/*   Updated: 2024/05/19 22:35:58 by bthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,8 @@ typedef struct s_mlx_data
 
 typedef struct s_complex
 {
-	double	x;
-	double	i;
+	long double	x;
+	long double	i;
 }	t_complex;
 
 void	custom_pixel_put(t_mlx_data *data, int x, int y, int colour);
