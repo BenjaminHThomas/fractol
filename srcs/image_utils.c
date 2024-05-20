@@ -6,7 +6,7 @@
 /*   By: bthomas <bthomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 16:09:54 by bthomas           #+#    #+#             */
-/*   Updated: 2024/05/19 21:51:54 by bthomas          ###   ########.fr       */
+/*   Updated: 2024/05/20 11:18:15 by bthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,39 @@ void	refresh_image(t_mlx_data *mlx)
 	mlx_put_image_to_window(mlx->mlx, mlx->win, mlx->img, 0, 0);
 }
 
+void	shift_img(t_mlx_data *mlx, int button)
+{
+	long double	x_shift;
+	long double	y_shift;
+
+	x_shift = 0.0;
+	y_shift = 0.0;
+	if (button == KEY_LEFT)
+		x_shift = -15.0;
+	if (button == KEY_RIGHT)
+		x_shift = 15.0;
+	if (button == KEY_UP)
+		y_shift = 15.0;
+	if (button == KEY_DOWN)
+		y_shift = -15.0;
+	mlx->MINX += x_shift * mlx->SCALE_X;
+	mlx->MAXX += x_shift * mlx->SCALE_X;
+	mlx->MINI += y_shift * mlx->SCALE_Y;
+	mlx->MAXI += y_shift * mlx->SCALE_Y;
+	mlx->SCALE_X = (mlx->MAXX - mlx->MINX) / (WINWIDTH - 1);
+	mlx->SCALE_Y = (mlx->MAXI - mlx->MINI) / (WINHEIGHT - 1);
+	refresh_image(mlx);
+}
+
+void	sharpen(t_mlx_data *mlx, int button)
+{
+	if (button == 45 && mlx->iters > 10)
+		mlx->iters -= 5;
+	else if (button == 61)
+		mlx->iters += 5;
+	refresh_image(mlx);
+}
+
 void	update_scale(t_mlx_data *mlx, int button, int x, int y)
 {
 	long double	x_offset;
@@ -26,11 +59,11 @@ void	update_scale(t_mlx_data *mlx, int button, int x, int y)
 	long double	zoom_fact;
 
 	if (button == MOUSE_WHL_DWN)
-		zoom_fact = 0.9;
+		zoom_fact = 0.85;
 	else
-		zoom_fact = 1.05;
+		zoom_fact = 1.10;
 	x_offset = mlx->MINX + x * mlx->SCALE_X;
-	y_offset = mlx->MINI + y * mlx->SCALE_Y;
+	y_offset = mlx->MAXI - y * mlx->SCALE_Y;
 	mlx->MINX = x_offset + (mlx->MINX - x_offset) * zoom_fact;
 	mlx->MAXX = x_offset + (mlx->MAXX - x_offset) * zoom_fact;
 	mlx->MINI = y_offset + (mlx->MINI - y_offset) * zoom_fact;
@@ -44,7 +77,7 @@ void	fill_image(t_mlx_data *mlx)
 	long double		x;
 	long double		y;
 	t_complex		c;
-	int				n;
+	float			n;
 
 	x = 0;
 	while (x <= WINWIDTH)
@@ -54,8 +87,11 @@ void	fill_image(t_mlx_data *mlx)
 		{
 			c.x = mlx->MINX + x * mlx->SCALE_X;
 			c.i = mlx->MAXI - y * mlx->SCALE_Y;
-			n = mandelbrot(c);
-			if (n < MAX_ITER)
+			if (mandelbrot_quick(c))
+				n = mlx->iters;
+			else
+				n = mandelbrot(c, mlx);
+			if (n < mlx->iters)
 				custom_pixel_put(mlx, x, y, get_colour(n));
 			else
 				custom_pixel_put(mlx, x, y, BLACKHEX);

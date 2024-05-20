@@ -6,7 +6,7 @@
 /*   By: bthomas <bthomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 11:01:18 by bthomas           #+#    #+#             */
-/*   Updated: 2024/05/19 20:24:39 by bthomas          ###   ########.fr       */
+/*   Updated: 2024/05/20 11:13:56 by bthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,17 +25,18 @@
 	*  z^2 = x^2 - y^2 + 2xyi
 	
 	*/
-
-int	mandelbrot(t_complex c)
+float	mandelbrot(t_complex c, t_mlx_data *mlx)
 {
 	t_complex		z;
 	int				n;
 	long double		temp_x;
+	float			mod;
+	float			smooth_n;
 
 	z.x = 0;
 	z.i = 0;
 	n = 0;
-	while (n < MAX_ITER)
+	while (n < mlx->iters)
 	{
 		temp_x = (z.x * z.x) - (z.i * z.i) + c.x;
 		z.i = 2 * z.x * z.i + c.i;
@@ -44,8 +45,42 @@ int	mandelbrot(t_complex c)
 			break ;
 		n++;
 	}
-	return (n);
+	if (n < mlx->iters)
+	{
+		mod = sqrt(z.x * z.x + z.i * z.i);
+		smooth_n = n + 1 - log(log(mod)) / log(2);
+	}
+	else
+		smooth_n = n;
+	return (smooth_n);
 }
+
+/*
+ *  The first step calculates the distance to (0.25, 0).
+ *    This relates to the cardioid shape (the main large shape).
+ *    The first if statement checks if it's within the main large shape
+ *
+ *  The second check calculates the distance from (-1,0) which is
+ *  the small circle to the left of the main shape.
+ *    the second if statement check if the point is within this circle.
+ *
+ *  mandelbrot_quick speeds up the calculations at the start but is
+ *  useless after the two main shapes are not visible.
+ */
+int	mandelbrot_quick(t_complex c)
+{
+	long double	dist_0_25;;
+	long double	dist_sq_neg_1;
+
+	dist_0_25 = sqrt((c.x - 0.25) * (c.x - 0.25) + c.i * c.i);
+	if (c.x < dist_0_25 - 2 * dist_0_25 * dist_0_25 + 0.25)
+		return (1);
+	dist_sq_neg_1 = (c.x + 1) * (c.x + 1) + c.i * c.i;
+	if (dist_sq_neg_1 <= 1.0 / 16.0)
+		return (1);
+	return (0);
+}
+
 
 /*
 You can play around with the functions to produce different 
@@ -64,7 +99,7 @@ colour schemes
 	*   tapering off faster than r.
 	*   1 - (1 - t)^2
 	*/
-int	get_colour(double n)
+int	get_colour(float n)
 {
 	double	t;
 	int		r;

@@ -6,7 +6,7 @@
 /*   By: bthomas <bthomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 10:36:02 by bthomas           #+#    #+#             */
-/*   Updated: 2024/05/19 14:37:45 by bthomas          ###   ########.fr       */
+/*   Updated: 2024/05/20 10:54:32 by bthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ static void	initialise(t_mlx_data *mlx)
 	mlx->MAXI = 1.5;
 	mlx->SCALE_X = (mlx->MAXX - mlx->MINX) / (WINWIDTH - 1);
 	mlx->SCALE_Y = (mlx->MAXI - mlx->MINI) / (WINHEIGHT - 1);
+	mlx->iters = MAX_ITER;
 }
 
 int	main(void)
@@ -36,9 +37,7 @@ int	main(void)
 	initialise(&mlx);
 	fill_image(&mlx);
 	mlx_put_image_to_window(mlx.mlx, mlx.win, mlx.img, 0, 0);
-	mlx_key_hook(mlx.win, keypress, &mlx);
-	mlx_hook(mlx.win, KEY_XBUTT, 0, clean_close, &mlx);
-	mlx_mouse_hook(mlx.win, mouse_scroll, &mlx);
+	attach_hooks(&mlx);
 	mlx_loop(mlx.mlx);
 	return (0);
 }

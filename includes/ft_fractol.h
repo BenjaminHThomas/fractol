@@ -6,18 +6,22 @@
 /*   By: bthomas <bthomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 10:36:17 by bthomas           #+#    #+#             */
-/*   Updated: 2024/05/19 22:35:58 by bthomas          ###   ########.fr       */
+/*   Updated: 2024/05/20 11:14:34 by bthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_FRACTOL_H
 # define FT_FRACTOL_H
 
-# define MAX_ITER 50
+# define MAX_ITER 30
 # define WINWIDTH 1080
 # define WINHEIGHT 720
 # define BLACKHEX 0x00000000
 # define KEY_ESC 65307
+# define KEY_LEFT 65361
+# define KEY_RIGHT 65363
+# define KEY_UP 65362
+# define KEY_DOWN 65364
 # define KEY_XBUTT 17
 # define MOUSE_WHL_DWN 5
 # define MOUSE_WHL_UP 4
@@ -64,6 +68,7 @@ typedef struct s_mlx_data
 	long double	MAXI;
 	long double	SCALE_X;
 	long double	SCALE_Y;
+	int			iters;
 }	t_mlx_data;
 
 typedef struct s_complex
@@ -72,14 +77,18 @@ typedef struct s_complex
 	long double	i;
 }	t_complex;
 
-void	custom_pixel_put(t_mlx_data *data, int x, int y, int colour);
-int		mandelbrot(t_complex c);
-int		get_colour(double n);
+void	custom_pixel_put(t_mlx_data *mlx, int x, int y, int colour);
+float	mandelbrot(t_complex c, t_mlx_data *mlx);
+int		mandelbrot_quick(t_complex c);
+int		get_colour(float n);
 void	fill_image(t_mlx_data *mlx);
-int		keypress(int keycode, t_mlx_data *mlx);
+int		buttonpress(int button, t_mlx_data *mlx);
 int		clean_close(t_mlx_data *mlx);
 int		mouse_scroll(int button, int x, int y, t_mlx_data *mlx);
 void	update_scale(t_mlx_data *mlx, int button, int x, int y);
 void	refresh_image(t_mlx_data *mlx);
+void	shift_img(t_mlx_data *mlx, int button);
+void	sharpen(t_mlx_data *mlx, int button);
+void	attach_hooks(t_mlx_data *mlx);
 
 #endif
