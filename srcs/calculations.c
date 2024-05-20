@@ -6,7 +6,7 @@
 /*   By: bthomas <bthomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 11:01:18 by bthomas           #+#    #+#             */
-/*   Updated: 2024/05/20 11:13:56 by bthomas          ###   ########.fr       */
+/*   Updated: 2024/05/20 11:28:44 by bthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,13 +45,12 @@ float	mandelbrot(t_complex c, t_mlx_data *mlx)
 			break ;
 		n++;
 	}
+	smooth_n = n;
 	if (n < mlx->iters)
 	{
 		mod = sqrt(z.x * z.x + z.i * z.i);
 		smooth_n = n + 1 - log(log(mod)) / log(2);
 	}
-	else
-		smooth_n = n;
 	return (smooth_n);
 }
 
@@ -69,7 +68,7 @@ float	mandelbrot(t_complex c, t_mlx_data *mlx)
  */
 int	mandelbrot_quick(t_complex c)
 {
-	long double	dist_0_25;;
+	long double	dist_0_25;
 	long double	dist_sq_neg_1;
 
 	dist_0_25 = sqrt((c.x - 0.25) * (c.x - 0.25) + c.i * c.i);
@@ -80,12 +79,8 @@ int	mandelbrot_quick(t_complex c)
 		return (1);
 	return (0);
 }
-
-
-/*
-You can play around with the functions to produce different 
+/* You can play around with the functions to produce different 
 colour schemes
-
 	* The r value is the function:
 	*   9 * (1 - t) * t^3
 	*   r is a bell curve. Slowly coming to a peak at ~0.77 before
@@ -99,6 +94,7 @@ colour schemes
 	*   tapering off faster than r.
 	*   1 - (1 - t)^2
 	*/
+
 int	get_colour(float n)
 {
 	double	t;
