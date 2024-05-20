@@ -7,7 +7,8 @@ C_FILES = main.c \
 		  mlx_utils.c \
 		  calculations.c \
 		  image_utils.c \
-		  events.c
+		  events.c \
+		  help.c
 
 SRCDIR = srcs/
 SRCS = $(addprefix $(SRCDIR), $(C_FILES))

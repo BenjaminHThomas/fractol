@@ -6,7 +6,7 @@
 /*   By: bthomas <bthomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 10:36:17 by bthomas           #+#    #+#             */
-/*   Updated: 2024/05/20 11:14:34 by bthomas          ###   ########.fr       */
+/*   Updated: 2024/05/20 21:15:41 by bthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,28 +31,12 @@
 # include <math.h>
 # include "libft.h"
 
-/* Struct used to store info about our window.
- *
- * bpp = bits per pixel.
- *
- * endian:
- * 		The byte order used to represent data in memory.
- *		Endian-ness determines how multi-byte data is stored and interpreted.
- *		There are 2 types:
- *			Big-endian: The most significant byte (the "big end") of a word
- *				is stored at the smallest memory address & the least signif 
- *				at the largest.
- *			little-endian: the opposite of big-endian.
- *
- *		If you're a normal person, running the program on a normal 
- *		x86 processor, then you'll be using little-endian.
- *
- *	The reason it's important for X11 is that it has to:
- *		Byte swap the data if the server and client are using different 
- *		systems.
- *		When you initialise X11 you send a byte to the server, indicating
- *			the endian-ness.
- */
+typedef struct s_complex
+{
+	long double	x;
+	long double	i;
+}	t_complex;
+
 typedef struct s_mlx_data
 {
 	void		*mlx;
@@ -69,18 +53,14 @@ typedef struct s_mlx_data
 	long double	SCALE_X;
 	long double	SCALE_Y;
 	int			iters;
+	char		set;
+	t_complex	z;
 }	t_mlx_data;
 
-typedef struct s_complex
-{
-	long double	x;
-	long double	i;
-}	t_complex;
-
 void	custom_pixel_put(t_mlx_data *mlx, int x, int y, int colour);
-float	mandelbrot(t_complex c, t_mlx_data *mlx);
+float	calc_set(t_complex c, t_mlx_data *mlx);
 int		mandelbrot_quick(t_complex c);
-int		get_colour(float n);
+int		get_colour(float n, t_mlx_data *mlx);
 void	fill_image(t_mlx_data *mlx);
 int		buttonpress(int button, t_mlx_data *mlx);
 int		clean_close(t_mlx_data *mlx);
@@ -90,5 +70,6 @@ void	refresh_image(t_mlx_data *mlx);
 void	shift_img(t_mlx_data *mlx, int button);
 void	sharpen(t_mlx_data *mlx, int button);
 void	attach_hooks(t_mlx_data *mlx);
+int		exit_help(void);
 
 #endif

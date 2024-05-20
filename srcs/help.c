@@ -1,35 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   mlx_utils.c                                        :+:      :+:    :+:   */
+/*   help.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bthomas <bthomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/17 10:03:21 by bthomas           #+#    #+#             */
-/*   Updated: 2024/05/20 19:25:12 by bthomas          ###   ########.fr       */
+/*   Created: 2024/05/20 11:41:33 by bthomas           #+#    #+#             */
+/*   Updated: 2024/05/20 19:51:33 by bthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_fractol.h"
-#include <stdio.h>
 
-int	clean_close(t_mlx_data *mlx)
+static void	print_instructions(void)
 {
-	if (mlx->img)
-		mlx_destroy_image(mlx->mlx, mlx->img);
-	if (mlx->win)
-		mlx_destroy_window(mlx->mlx, mlx->win);
-	mlx_loop_end(mlx->mlx);
-	mlx_destroy_display(mlx->mlx);
-	free(mlx->mlx);
-	exit(1);
-	return (0);
+	char	*s1;
+	char	*s2;
+
+	s1 = "Here are the parameters:\n\tm: mandelbrot set\n\tj: Julia set\n";
+	write(1, s1, ft_strlen(s1));
+	s2 = "Additionally you can include the starting parameters for the"
+			" julia set if you so desire.\n";
+	write(1, s2, ft_strlen(s2));
 }
 
-void	custom_pixel_put(t_mlx_data *mlx, int x, int y, int colour)
+int	exit_help(void)
 {
-	char	*dst;
-
-	dst = mlx->addr + (y * mlx->linelen + x * (mlx->bpp / 8));
-	*(unsigned int *)dst = colour;
+	write(2, "Error: Inavlid input\n\n", 22);
+	print_instructions();
+	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: bthomas <bthomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 16:09:54 by bthomas           #+#    #+#             */
-/*   Updated: 2024/05/20 11:18:15 by bthomas          ###   ########.fr       */
+/*   Updated: 2024/05/20 21:11:34 by bthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,13 @@ void	shift_img(t_mlx_data *mlx, int button)
 	x_shift = 0.0;
 	y_shift = 0.0;
 	if (button == KEY_LEFT)
-		x_shift = -15.0;
+		x_shift = -25.0;
 	if (button == KEY_RIGHT)
-		x_shift = 15.0;
+		x_shift = 25.0;
 	if (button == KEY_UP)
-		y_shift = 15.0;
+		y_shift = 25.0;
 	if (button == KEY_DOWN)
-		y_shift = -15.0;
+		y_shift = -25.0;
 	mlx->MINX += x_shift * mlx->SCALE_X;
 	mlx->MAXX += x_shift * mlx->SCALE_X;
 	mlx->MINI += y_shift * mlx->SCALE_Y;
@@ -59,9 +59,9 @@ void	update_scale(t_mlx_data *mlx, int button, int x, int y)
 	long double	zoom_fact;
 
 	if (button == MOUSE_WHL_DWN)
-		zoom_fact = 0.85;
+		zoom_fact = 0.80;
 	else
-		zoom_fact = 1.10;
+		zoom_fact = 1.30;
 	x_offset = mlx->MINX + x * mlx->SCALE_X;
 	y_offset = mlx->MAXI - y * mlx->SCALE_Y;
 	mlx->MINX = x_offset + (mlx->MINX - x_offset) * zoom_fact;
@@ -87,12 +87,12 @@ void	fill_image(t_mlx_data *mlx)
 		{
 			c.x = mlx->MINX + x * mlx->SCALE_X;
 			c.i = mlx->MAXI - y * mlx->SCALE_Y;
-			if (mandelbrot_quick(c))
+			if (mlx->set == 'm' && mandelbrot_quick(c))
 				n = mlx->iters;
 			else
-				n = mandelbrot(c, mlx);
+				n = calc_set(c, mlx);
 			if (n < mlx->iters)
-				custom_pixel_put(mlx, x, y, get_colour(n));
+				custom_pixel_put(mlx, x, y, get_colour(n, mlx));
 			else
 				custom_pixel_put(mlx, x, y, BLACKHEX);
 			y++;

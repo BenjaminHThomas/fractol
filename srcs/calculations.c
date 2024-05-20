@@ -6,13 +6,25 @@
 /*   By: bthomas <bthomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 11:01:18 by bthomas           #+#    #+#             */
-/*   Updated: 2024/05/20 11:28:44 by bthomas          ###   ########.fr       */
+/*   Updated: 2024/05/20 21:28:24 by bthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_fractol.h"
+#include <stdio.h>
+
+static float	smooth_n(int n, t_complex z, t_mlx_data *mlx)
+{
+	float	mod;
+
+	if (n == mlx->iters)
+		return ((float)n);
+	mod = sqrt(z.x * z.x + z.i * z.i);
+	return (n + 1 - log(log(mod)) / log(2));
+}
 
 /*
+	* Mandelbrot Calculation:
 	* f(z) = z^2 + c
 	*
 	*  f(z) = new position.
@@ -23,18 +35,15 @@
 	*  z^2 = (x + yi)(x + yi)
 	*  z^2 = x^2 + xyi + xyi - y^2
 	*  z^2 = x^2 - y^2 + 2xyi
-	
 	*/
-float	mandelbrot(t_complex c, t_mlx_data *mlx)
+float	calc_set(t_complex c, t_mlx_data *mlx)
 {
-	t_complex		z;
 	int				n;
 	long double		temp_x;
-	float			mod;
-	float			smooth_n;
+	t_complex		z;
 
-	z.x = 0;
-	z.i = 0;
+	z.i = mlx->z.i;
+	z.x = mlx->z.x;
 	n = 0;
 	while (n < mlx->iters)
 	{
@@ -45,13 +54,7 @@ float	mandelbrot(t_complex c, t_mlx_data *mlx)
 			break ;
 		n++;
 	}
-	smooth_n = n;
-	if (n < mlx->iters)
-	{
-		mod = sqrt(z.x * z.x + z.i * z.i);
-		smooth_n = n + 1 - log(log(mod)) / log(2);
-	}
-	return (smooth_n);
+	return (smooth_n(n, z, mlx));
 }
 
 /*
@@ -95,14 +98,14 @@ colour schemes
 	*   1 - (1 - t)^2
 	*/
 
-int	get_colour(float n)
+int	get_colour(float n, t_mlx_data *mlx)
 {
 	double	t;
 	int		r;
 	int		g;
 	int		b;
 
-	t = n / MAX_ITER;
+	t = n / mlx->iters;
 	r = (int)(9 * (1 - t) * t * t * t * 255);
 	g = (int)(15 * (1 - t) * (1 - t) * t * t * 255);
 	b = (int)((1 - (1 - t) * (1 - t)) * 255);
