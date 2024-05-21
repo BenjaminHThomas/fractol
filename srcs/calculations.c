@@ -42,8 +42,16 @@ float	calc_set(t_complex c, t_mlx_data *mlx)
 	long double		temp_x;
 	t_complex		z;
 
+	
 	z.i = mlx->z.i;
 	z.x = mlx->z.x;
+	if (mlx->set == 'j')
+	{
+		z.i = c.i;
+		z.x = c.x;
+		c.x = mlx->z.x;
+		c.i = mlx->z.i;
+	}
 	n = 0;
 	while (n < mlx->iters)
 	{
