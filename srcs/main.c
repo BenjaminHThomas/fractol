@@ -6,7 +6,7 @@
 /*   By: bthomas <bthomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 10:36:02 by bthomas           #+#    #+#             */
-/*   Updated: 2024/05/20 20:04:39 by bthomas          ###   ########.fr       */
+/*   Updated: 2024/05/21 17:32:42 by bthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ static void	initialise(t_mlx_data *mlx, char **av, int ac)
 		mlx->z.i = ft_atof(av[3]);
 	}
 	mlx->mlx = mlx_init();
-	mlx->win = mlx_new_window(mlx->mlx, WINWIDTH, WINHEIGHT, "Hello world");
+	mlx->win = mlx_new_window(mlx->mlx, WINWIDTH, WINHEIGHT, "Fractol");
 	mlx->img = mlx_new_image(mlx->mlx, WINWIDTH, WINHEIGHT);
 	mlx->addr = mlx_get_data_addr(mlx->img, &mlx->bpp, &mlx->linelen,
 			&mlx->endian);
