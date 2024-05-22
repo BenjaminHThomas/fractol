@@ -6,7 +6,7 @@
 /*   By: bthomas <bthomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 11:01:18 by bthomas           #+#    #+#             */
-/*   Updated: 2024/05/22 09:48:57 by bthomas          ###   ########.fr       */
+/*   Updated: 2024/05/22 10:19:48 by bthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ colour schemes
 	*   r is a bell curve. Slowly coming to a peak at ~0.77 before
 	*   plummeting to 0
 	*
-	* The g value is a quadratic curve
+	* The g value is similar to r:
 	*   15 * (1 - t)^2 * t^2
 	*   g is also a bell curve but not skewed to the right like r.
 	*

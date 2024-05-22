@@ -9,6 +9,7 @@ C_FILES = main.c \
 		  image_utils.c \
 		  image_utils_bonus.c \
 		  events.c \
+		  atof.c \
 		  help.c
 
 SRCDIR = srcs/
