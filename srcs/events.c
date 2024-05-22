@@ -6,7 +6,7 @@
 /*   By: bthomas <bthomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 09:33:10 by bthomas           #+#    #+#             */
-/*   Updated: 2024/05/20 10:54:11 by bthomas          ###   ########.fr       */
+/*   Updated: 2024/05/22 09:29:05 by bthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,13 @@ void	attach_hooks(t_mlx_data *mlx)
 
 int	buttonpress(int button, t_mlx_data *mlx)
 {
-	if (button == KEY_ESC)
+	if (button == XK_Escape)
 		clean_close(mlx);
 	else if (button >= 65361 && button <= 65364)
 		shift_img(mlx, button);
 	else if (button == 45 || button == 61)
 		sharpen(mlx, button);
-	return (0);
+	return (colour_shift(button, mlx));
 }
 
 int	mouse_scroll(int button, int x, int y, t_mlx_data *mlx)

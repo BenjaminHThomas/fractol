@@ -6,14 +6,14 @@
 /*   By: bthomas <bthomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 11:01:18 by bthomas           #+#    #+#             */
-/*   Updated: 2024/05/20 21:28:24 by bthomas          ###   ########.fr       */
+/*   Updated: 2024/05/22 09:48:57 by bthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_fractol.h"
 #include <stdio.h>
 
-static float	smooth_n(int n, t_complex z, t_mlx_data *mlx)
+float	smooth_n(int n, t_complex z, t_mlx_data *mlx)
 {
 	float	mod;
 
@@ -42,7 +42,6 @@ float	calc_set(t_complex c, t_mlx_data *mlx)
 	long double		temp_x;
 	t_complex		z;
 
-	
 	z.i = mlx->z.i;
 	z.x = mlx->z.x;
 	if (mlx->set == 'j')
@@ -114,8 +113,8 @@ int	get_colour(float n, t_mlx_data *mlx)
 	int		b;
 
 	t = n / mlx->iters;
-	r = (int)(9 * (1 - t) * t * t * t * 255);
-	g = (int)(15 * (1 - t) * (1 - t) * t * t * 255);
-	b = (int)((1 - (1 - t) * (1 - t)) * 255);
+	r = (int)(mlx->r_fact * (1 - t) * t * t * t * 255);
+	g = (int)(mlx->g_fact * (1 - t) * (1 - t) * t * t * 255);
+	b = (int)(mlx->b_fact * (1 - (1 - t) * (1 - t)) * 255);
 	return ((r << 16) | (g << 8) | b);
 }

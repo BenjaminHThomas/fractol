@@ -6,45 +6,18 @@
 /*   By: bthomas <bthomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 10:36:02 by bthomas           #+#    #+#             */
-/*   Updated: 2024/05/21 17:32:42 by bthomas          ###   ########.fr       */
+/*   Updated: 2024/05/22 09:30:00 by bthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_fractol.h"
 #include <stdio.h>
 
-static float	ft_atof(char *s)
-{
-	int		i;
-	int		j;
-	int		sign;
-	double	ret;
-
-	ret = 0.0;
-	i = -1;
-	sign = 1;
-	while (s[++i] && !ft_isdigit(s[i]))
-		if (s[i] == '-')
-			sign *= -1;
-	while (ft_isdigit(s[i]))
-	{
-		ret *= 10;
-		ret += s[i] - '0';
-		i++;
-	}
-	if (s[i] != '.')
-		return (ret * sign);
-	j = i;
-	while (s[++j] && ft_isdigit(s[j]))
-		ret += ((double)s[j]  - '0') / pow(10, (j - i));
-	return (ret * sign);
-}
-
 static void	initialise(t_mlx_data *mlx, char **av, int ac)
 {
 	ft_memset(mlx, 0, sizeof(mlx));
 	mlx->set = *av[1];
-	if (mlx->set == 'm' || ac < 4)
+	if (mlx->set == 'm' || mlx->set == 'b' || ac < 4)
 	{
 		mlx->z.x = 0;
 		mlx->z.i = 0;
@@ -66,15 +39,16 @@ static void	initialise(t_mlx_data *mlx, char **av, int ac)
 	mlx->SCALE_X = (mlx->MAXX - mlx->MINX) / (WINWIDTH - 1);
 	mlx->SCALE_Y = (mlx->MAXI - mlx->MINI) / (WINHEIGHT - 1);
 	mlx->iters = MAX_ITER;
+	init_colours(mlx);
 }
 
 int	main(int ac, char **av)
 {
 	t_mlx_data	mlx;
 
-	if (ac < 2)
+	if (ac < 2 || (*av[1] == 'j' && ac < 4))
 		return (exit_help());
-	if (*av[1] != 'm' && *av[1] != 'j')
+	if (*av[1] != 'm' && *av[1] != 'b' && *av[1] != 'j')
 		return (exit_help());
 	printf("initialising...\n");
 	initialise(&mlx, av, ac);

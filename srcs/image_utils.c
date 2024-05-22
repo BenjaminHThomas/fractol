@@ -6,7 +6,7 @@
 /*   By: bthomas <bthomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 16:09:54 by bthomas           #+#    #+#             */
-/*   Updated: 2024/05/20 21:11:34 by bthomas          ###   ########.fr       */
+/*   Updated: 2024/05/22 09:19:34 by bthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,13 @@ void	shift_img(t_mlx_data *mlx, int button)
 
 	x_shift = 0.0;
 	y_shift = 0.0;
-	if (button == KEY_LEFT)
+	if (button == XK_Left)
 		x_shift = -25.0;
-	if (button == KEY_RIGHT)
+	if (button == XK_Right)
 		x_shift = 25.0;
-	if (button == KEY_UP)
+	if (button == XK_Up)
 		y_shift = 25.0;
-	if (button == KEY_DOWN)
+	if (button == XK_Down)
 		y_shift = -25.0;
 	mlx->MINX += x_shift * mlx->SCALE_X;
 	mlx->MAXX += x_shift * mlx->SCALE_X;
@@ -79,24 +79,24 @@ void	fill_image(t_mlx_data *mlx)
 	t_complex		c;
 	float			n;
 
-	x = 0;
-	while (x <= WINWIDTH)
+	x = -1;
+	while (++x <= WINWIDTH)
 	{
-		y = 0;
-		while (y <= WINHEIGHT)
+		y = -1;
+		while (++y <= WINHEIGHT)
 		{
 			c.x = mlx->MINX + x * mlx->SCALE_X;
 			c.i = mlx->MAXI - y * mlx->SCALE_Y;
 			if (mlx->set == 'm' && mandelbrot_quick(c))
 				n = mlx->iters;
-			else
+			else if (mlx->set != 'b')
 				n = calc_set(c, mlx);
+			else
+				n = burning_ship(c, mlx);
 			if (n < mlx->iters)
 				custom_pixel_put(mlx, x, y, get_colour(n, mlx));
 			else
 				custom_pixel_put(mlx, x, y, BLACKHEX);
-			y++;
 		}
-		x++;
 	}
 }
