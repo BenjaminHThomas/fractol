@@ -32,6 +32,8 @@ INCS =	-I ./includes/\
 
 all: $(OBJDIR) $(MLX) $(LIBFT) $(NAME)
 
+bonus: all
+
 $(OBJDIR)%.o: $(SRCDIR)%.c | $(OBJDIR)
 	$(COMPILER) $(CFLAGS) -c $< -o $@ $(INCS)
 
@@ -63,5 +65,5 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re bonus
 
