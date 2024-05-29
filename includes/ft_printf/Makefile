@@ -6,7 +6,7 @@
 #    By: bthomas <bthomas@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/14 14:29:18 by bthomas           #+#    #+#              #
-#    Updated: 2024/05/28 14:35:10 by bthomas          ###   ########.fr        #
+#    Updated: 2024/05/29 13:10:55 by bthomas          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,38 +29,38 @@ OFILES			= $(addprefix $(OBJ_DIR)/,$(CFILES:.c=.o))
 CFLAGS			= -Wall -Werror -Wextra
 COMPILER		= cc
 AR				= ar
-ARFLAGS			= rcsT
+ARFLAGS			= -rcs
 
 LIBFT_LIB		= libft.a
-LIBFT_PATH		= ./libft/
-LIBFT			= $(LIBFT_PATH)$(LIBFT_LIB)
+LIBFT_PATH		= ./libft
+LIBFT			= $(LIBFT_PATH)/$(LIBFT_LIB)
 
 all: $(OBJ_DIR) $(LIBFT) $(NAME)
+
+bonus: all
 
 $(OBJ_DIR):
 	@mkdir -p $(OBJ_DIR)
 
 $(OBJ_DIR)/%.o: %.c
-	$(COMPILER) $(CFLAGS) -c $< -o $@
+	@$(COMPILER) $(CFLAGS) -c $< -o $@
 
 $(LIBFT):
-	@$(MAKE) -C $(LIBFT_PATH)
-
-$(OBJ_DIR)%.o: %.c
-	$(COMPILER) $(CFLAGS) -c $< -o $@
+	@echo "Making libft..."
+	@$(MAKE) -sC $(LIBFT_PATH)
 
 $(NAME): $(OFILES) $(LIBFT)
-	$(AR) $(ARFLAGS) $(NAME) $(OFILES)
-	$(AR) -rcsT $(NAME) $(LIBFT)
+	@cp $(LIBFT) $(NAME)
+	@$(AR) $(ARFLAGS) $(NAME) $^ 
 
 clean:
 	@rm -rf $(OBJ_DIR)
-	@$(MAKE) clean -C $(LIBFT_PATH)
+	@$(MAKE) clean -sC $(LIBFT_PATH)
 
 fclean: clean
 	@rm -f $(NAME)
-	@$(MAKE) fclean -C $(LIBFT_PATH)
+	@$(MAKE) fclean -sC $(LIBFT_PATH)
 
 re: fclean all
 
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re bonus

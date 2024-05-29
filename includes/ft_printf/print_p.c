@@ -23,7 +23,7 @@ void	ft_atoi_base(t_data *data, long unsigned n, char *base)
 	str = (char *)ft_calloc(numlen + 2, 1);
 	if (!str)
 		return ;
-	while (n > 16 && numlen > 1)
+	while (n >= 16 && numlen > 1)
 	{
 		str[numlen - 1] = base[n % 16];
 		n /= 16;

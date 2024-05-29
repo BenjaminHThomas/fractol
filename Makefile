@@ -35,35 +35,34 @@ all: $(OBJDIR) $(MLX) $(PRINTF) $(NAME)
 bonus: all
 
 $(OBJDIR)%.o: $(SRCDIR)%.c | $(OBJDIR)
-	$(COMPILER) $(CFLAGS) -c $< -o $@ $(INCS)
+	@$(COMPILER) $(CFLAGS) -c $< -o $@ $(INCS)
 
 $(OBJDIR):
-	mkdir -p $(OBJDIR)
+	@mkdir -p $(OBJDIR)
 
 $(MLX):
 	@echo "Making minilibx..."
-	@make -C $(MLXDIR)
+	@make -sC $(MLXDIR)
 
 $(PRINTF):
 	@echo "Making printf..."
-	@make -C $(PRINTF_DIR)
+	@make -sC $(PRINTF_DIR)
 
 $(NAME): $(OBJS) $(MLX) $(PRINTF)
-	$(COMPILER) $(CFLAGS) -o $(NAME) $(OBJS) $(MLX) $(PRINTF) -lXext -lX11 -lm
+	@$(COMPILER) $(CFLAGS) -o $(NAME) $(OBJS) $(MLX) $(PRINTF) -lXext -lX11 -lm
 
 clean:
 	@echo "Cleaning objects..."
 	@rm -rf $(OBJDIR)
-	@make clean -C $(MLXDIR)
-	@make clean -C $(PRINTF_DIR)
+	@make clean -sC $(MLXDIR)
+	@make clean -sC $(PRINTF_DIR)
 
 fclean: clean
 	@echo "Removing fractol program..."
 	@rm -f $(NAME)
-	@make fclean -C $(PRINTF_DIR)
-	@make clean -C $(MLXDIR)
+	@make fclean -sC $(PRINTF_DIR)
+	@make clean -sC $(MLXDIR)
 
 re: fclean all
 
 .PHONY: all clean fclean re bonus
-

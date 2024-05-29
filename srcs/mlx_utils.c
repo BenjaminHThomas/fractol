@@ -14,7 +14,8 @@
 
 int	clean_close(t_mlx_data *mlx)
 {
-	ft_printf("Closing down, goodbye 😔...\n");
+	print_cowboy();
+	ft_printf("Closing down, goodbye...\n");
 	if (mlx->img)
 		mlx_destroy_image(mlx->mlx, mlx->img);
 	if (mlx->win)

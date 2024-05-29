@@ -81,5 +81,6 @@ float	smooth_n(int n, t_complex z, t_mlx_data *mlx);
 void	init_colours(t_mlx_data *mlx);
 int		colour_shift(int button, t_mlx_data *mlx);
 float	ft_atof(char *s);
+void	print_cowboy(void);
 
 #endif
