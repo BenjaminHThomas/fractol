@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "ft_fractol.h"
-#include <stdio.h>
 
 float	smooth_n(int n, t_complex z, t_mlx_data *mlx)
 {

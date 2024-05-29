@@ -1,40 +1,50 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstmap.c                                        :+:      :+:    :+:   */
+/*   ft_lstnew_bonus.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bthomas <bthomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/10 13:13:09 by bthomas           #+#    #+#             */
-/*   Updated: 2024/04/14 16:51:28 by bthomas          ###   ########.fr       */
+/*   Created: 2024/04/08 11:25:56 by bthomas           #+#    #+#             */
+/*   Updated: 2024/05/21 20:27:06 by bthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void(*del)(void *))
+t_list	*ft_lstnew(void *content)
 {
-	t_list	*plst;
 	t_list	*newlst;
-	t_list	*node;
-	void	*fret;
 
-	if (!lst || !f || !del)
+	newlst = malloc(sizeof(t_list));
+	if (!newlst)
 		return (NULL);
-	plst = lst;
-	newlst = NULL;
-	while (plst)
-	{
-		fret = f(plst->content);
-		node = ft_lstnew(fret);
-		if (!node)
-		{
-			del(fret);
-			ft_lstclear(&newlst, (*del));
-			return (newlst);
-		}
-		ft_lstadd_back(&newlst, node);
-		plst = plst->next;
-	}
+	newlst->content = content;
+	newlst->next = NULL;
 	return (newlst);
 }
+/*
+#include <stdio.h>
+
+void	print_list(t_list *list)
+{
+	while (list)
+	{
+		printf("%s\n", (char *)list->content);
+		list = list->next;
+	}
+}
+
+int	main(void)
+{
+	t_list *new;
+	char	*content = "Hello world";
+
+	new = ft_lstnew(content);
+	if (!new)
+		return (1);
+	print_list(new);
+	free(new);
+	return (0);
+}
+*/

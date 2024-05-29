@@ -1,44 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstclear.c                                      :+:      :+:    :+:   */
+/*   ft_lstiter_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bthomas <bthomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/09 15:27:07 by bthomas           #+#    #+#             */
-/*   Updated: 2024/04/10 10:16:03 by bthomas          ###   ########.fr       */
+/*   Created: 2024/04/10 10:10:53 by bthomas           #+#    #+#             */
+/*   Updated: 2024/05/21 20:36:46 by bthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_lstclear(t_list **lst, void (*del)(void *))
+void	ft_lstiter(t_list *lst, void (*f)(void *))
 {
-	t_list	*plst;
-	t_list	*pnext;
-
-	if (!lst || !*lst)
+	if (!lst || !f)
 		return ;
-	plst = *lst;
-	while (plst)
+	while (lst)
 	{
-		pnext = plst->next;
-		del(plst->content);
-		free(plst);
-		plst = pnext;
+		f(lst->content);
+		lst = lst->next;
 	}
-	*lst = NULL;
 }
 /*
-void	del(void *x)
+#include <stdio.h>
+#include <stdlib.h>
+void	f1(void	*content)
 {
-	free(x);
+	printf("%p\n", content);
 }
 
-#include <stdio.h>
 int main()
 {
-    t_list *head = NULL;
     t_list *node1 = malloc(sizeof(t_list));
     t_list *node2 = malloc(sizeof(t_list));
     t_list *node3 = malloc(sizeof(t_list));
@@ -55,8 +48,7 @@ int main()
     node2->next = node3;
     node3->next = NULL;
 
-    head = node1;
-    ft_lstclear(&head, del);
+    ft_lstiter(node1, f1);
     return 0;
 }
 */

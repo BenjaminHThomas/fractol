@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "ft_fractol.h"
-#include <stdio.h>
 
 void	refresh_image(t_mlx_data *mlx)
 {
@@ -34,12 +33,12 @@ void	shift_img(t_mlx_data *mlx, int button)
 		y_shift = 25.0;
 	if (button == XK_Down)
 		y_shift = -25.0;
-	mlx->MINX += x_shift * mlx->SCALE_X;
-	mlx->MAXX += x_shift * mlx->SCALE_X;
-	mlx->MINI += y_shift * mlx->SCALE_Y;
-	mlx->MAXI += y_shift * mlx->SCALE_Y;
-	mlx->SCALE_X = (mlx->MAXX - mlx->MINX) / (WINWIDTH - 1);
-	mlx->SCALE_Y = (mlx->MAXI - mlx->MINI) / (WINHEIGHT - 1);
+	mlx->minx += x_shift * mlx->scale_x;
+	mlx->maxx += x_shift * mlx->scale_x;
+	mlx->mini += y_shift * mlx->scale_y;
+	mlx->maxi += y_shift * mlx->scale_y;
+	mlx->scale_x = (mlx->maxx - mlx->minx) / (WINWIDTH - 1);
+	mlx->scale_y = (mlx->maxi - mlx->mini) / (WINHEIGHT - 1);
 	refresh_image(mlx);
 }
 
@@ -62,14 +61,14 @@ void	update_scale(t_mlx_data *mlx, int button, int x, int y)
 		zoom_fact = 0.80;
 	else
 		zoom_fact = 1.30;
-	x_offset = mlx->MINX + x * mlx->SCALE_X;
-	y_offset = mlx->MAXI - y * mlx->SCALE_Y;
-	mlx->MINX = x_offset + (mlx->MINX - x_offset) * zoom_fact;
-	mlx->MAXX = x_offset + (mlx->MAXX - x_offset) * zoom_fact;
-	mlx->MINI = y_offset + (mlx->MINI - y_offset) * zoom_fact;
-	mlx->MAXI = y_offset + (mlx->MAXI - y_offset) * zoom_fact;
-	mlx->SCALE_X = (mlx->MAXX - mlx->MINX) / (WINWIDTH - 1);
-	mlx->SCALE_Y = (mlx->MAXI - mlx->MINI) / (WINHEIGHT - 1);
+	x_offset = mlx->minx + x * mlx->scale_x;
+	y_offset = mlx->maxi - y * mlx->scale_y;
+	mlx->minx = x_offset + (mlx->minx - x_offset) * zoom_fact;
+	mlx->maxx = x_offset + (mlx->maxx - x_offset) * zoom_fact;
+	mlx->mini = y_offset + (mlx->mini - y_offset) * zoom_fact;
+	mlx->maxi = y_offset + (mlx->maxi - y_offset) * zoom_fact;
+	mlx->scale_x = (mlx->maxx - mlx->minx) / (WINWIDTH - 1);
+	mlx->scale_y = (mlx->maxi - mlx->mini) / (WINHEIGHT - 1);
 }
 
 void	fill_image(t_mlx_data *mlx)
@@ -85,8 +84,8 @@ void	fill_image(t_mlx_data *mlx)
 		y = -1;
 		while (++y <= WINHEIGHT)
 		{
-			c.x = mlx->MINX + x * mlx->SCALE_X;
-			c.i = mlx->MAXI - y * mlx->SCALE_Y;
+			c.x = mlx->minx + x * mlx->scale_x;
+			c.i = mlx->maxi - y * mlx->scale_y;
 			if (mlx->set == 'm' && mandelbrot_quick(c))
 				n = mlx->iters;
 			else if (mlx->set != 'b')

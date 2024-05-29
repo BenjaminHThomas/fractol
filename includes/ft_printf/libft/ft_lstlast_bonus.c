@@ -1,50 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstnew.c                                        :+:      :+:    :+:   */
+/*   ft_lstlast_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bthomas <bthomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/08 11:25:56 by bthomas           #+#    #+#             */
-/*   Updated: 2024/04/09 10:38:40 by bthomas          ###   ########.fr       */
+/*   Created: 2024/04/09 12:23:21 by bthomas           #+#    #+#             */
+/*   Updated: 2024/05/22 14:21:34 by bthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-t_list	*ft_lstnew(void *content)
+t_list	*ft_lstlast(t_list *lst)
 {
-	t_list	*newlst;
-
-	newlst = (t_list *)malloc(sizeof(t_list));
-	if (!newlst)
+	if (NULL == lst)
 		return (NULL);
-	newlst->content = content;
-	newlst->next = NULL;
-	return (newlst);
+	while (lst->next)
+		lst = lst->next;
+	return (lst);
 }
 /*
+#include <string.h>
 #include <stdio.h>
-
-void	print_list(t_list *list)
-{
-	while (list)
-	{
-		printf("%s\n", (char *)list->content);
-		list = list->next;
-	}
-}
-
 int	main(void)
 {
-	t_list *new;
-	char	*content = "Hello world";
+	t_list *l;
+	t_list *expected;
+	t_list *actual;
 
-	new = ft_lstnew(content);
-	if (!new)
-		return (1);
-	print_list(new);
-	free(new);
+	l = ft_lstnew(strdup("1"));
+	l->next = ft_lstnew(strdup("2"));
+	l->next->next = ft_lstnew(strdup("3"));
+	expected = l->next->next;
+	actual = ft_lstlast(l);
+	if (actual == expected)
+		printf("Success!");
+	else
+		printf("Failure!");
 	return (0);
-}
-*/
+}*/

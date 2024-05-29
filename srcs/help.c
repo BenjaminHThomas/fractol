@@ -20,19 +20,19 @@ static void	print_instructions(void)
 
 	s1 = "Here are the parameters:\n\tm: mandelbrot set\n\tj: Julia set\n"
 		"\tb: burning ship set\n";
-	write(1, s1, ft_strlen(s1));
+	ft_putstr_fd(s1, 1);
 	s2 = "\nFor the julia set please include the 2 starting parameters.\n"
 		"I recommend values between 1.0 & -1.0\n\n";
-	write(1, s2, ft_strlen(s2));
+	ft_putstr_fd(s2, 1);
 	s3 = "You can adjust rgb values with:"
 		"\n\tr: q-- w++\n\tg: a-- s++\n\tb: z-- x++\n"
 		"\nUse + & - to adjust the precision,\nand arrow keys for direction.";
-	write(1, s3, ft_strlen(s3));
+	ft_putstr_fd(s3, 1);
 }
 
 int	exit_help(void)
 {
-	write(2, "Error: Inavlid input\n\n", 22);
+	ft_putendl_fd("Error: Inavlid input\n", 2);
 	print_instructions();
 	return (1);
 }

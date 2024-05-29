@@ -6,11 +6,15 @@
 #    By: bthomas <bthomas@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/29 11:11:38 by bthomas           #+#    #+#              #
-#    Updated: 2024/04/15 11:38:25 by bthomas          ###   ########.fr        #
+#    Updated: 2024/05/28 14:00:50 by bthomas          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-CFILES	= ft_bzero.c \
+NAME = libft.a
+CC = cc
+CFLAGS = -Wall -Wextra -Werror
+
+SRCS	= ft_bzero.c \
 		  ft_isalnum.c \
 		  ft_isascii.c \
 		  ft_isprint.c \
@@ -45,40 +49,33 @@ CFILES	= ft_bzero.c \
 		  ft_putnbr_fd.c \
 		  ft_tolower.c
 
-BONUS_CFILES = ft_lstnew.c \
-		  ft_lstadd_front.c \
-		  ft_lstsize.c \
-		  ft_lstlast.c \
-		  ft_lstadd_back.c \
-		  ft_lstclear.c \
-		  ft_lstiter.c \
-		  ft_lstmap.c \
-		  ft_lstdelone.c
+BONUS_SRCS = ft_lstnew_bonus.c \
+		  ft_lstadd_front_bonus.c \
+		  ft_lstsize_bonus.c \
+		  ft_lstlast_bonus.c \
+		  ft_lstadd_back_bonus.c \
+		  ft_lstclear_bonus.c \
+		  ft_lstiter_bonus.c \
+		  ft_lstmap_bonus.c \
+		  ft_lstdelone_bonus.c
 
-OFILES = $(CFILES:.c=.o)
-BONUS_OFILES = $(BONUS_CFILES:.c=.o)
-
-CFLAGS = -Wall -Werror -Wextra
-
-NAME = libft.a
-
-COMPILER = gcc
-
-$(NAME):
-	$(COMPILER) $(CFLAGS) -c $(CFILES) -I./
-	ar -rcs $@ $(OFILES)
+OBJS = $(SRCS:.c=.o)
+BONUS_OBJS = $(BONUS_SRCS:.c=.o)
 
 all: $(NAME)
 
-bonus: $(OFILES) $(BONUS_OFILES)
-	ar -rcs $(NAME) $^
+$(NAME): $(OBJS)
+	ar rc $(NAME) $^
+
+bonus: $(OBJS) $(BONUS_OBJS)
+	ar rc $(NAME) $^
 
 clean:
-	rm -f *.o
+	@rm -f $(OBJS) $(BONUS_OBJS)
 
 fclean: clean
-	rm -f $(NAME)
+	@rm -f $(NAME)
 
 re: fclean all
 
-.PHONY: all, clean, flcean, re
+.PHONY: all, clean, fclean, re, bonus

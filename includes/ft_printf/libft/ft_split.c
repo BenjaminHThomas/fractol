@@ -6,13 +6,27 @@
 /*   By: bthomas <bthomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/01 11:11:17 by bthomas           #+#    #+#             */
-/*   Updated: 2024/05/14 22:13:54 by bthomas          ###   ########.fr       */
+/*   Updated: 2024/05/21 20:40:07 by bthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 /*#include <stdlib.h>
 #include <string.h>*/
+
+static char	**free_list(char **wlist)
+{
+	int	i;
+
+	i = 0;
+	while (wlist[i])
+	{
+		free(wlist[i]);
+		i++;
+	}
+	free(wlist);
+	return (NULL);
+}
 
 static int	count_words(const char *s, char c)
 {
@@ -77,7 +91,7 @@ char	**ft_split(char const *s, char c)
 		return (null_wlist());
 	wlist = ft_calloc((count_words(s, c) + 1), sizeof(*wlist));
 	if (!wlist)
-		return (NULL);
+		return (null_wlist());
 	start = 0;
 	i = 0;
 	while (s[start])
@@ -87,6 +101,8 @@ char	**ft_split(char const *s, char c)
 		if (!s[start])
 			continue ;
 		wlist[i] = get_word(s, &start, c);
+		if (!wlist[i])
+			return (free_list(wlist));
 		i++;
 	}
 	return (wlist);
@@ -95,7 +111,7 @@ char	**ft_split(char const *s, char c)
 #include <stdio.h>
 int	main(void)
 {;
-	char	**wlist = ft_split("(^^^", '^');
+	char	**wlist = ft_split("hello! ", ' ');
 	int		i;
 
 	i = 0;

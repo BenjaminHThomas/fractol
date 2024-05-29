@@ -17,9 +17,9 @@
 # include <unistd.h>
 # include <mlx.h>
 # include <math.h>
-# include "libft.h"
 # include <X11/X.h>
 # include <X11/keysym.h>
+# include "ft_printf.h"
 # define MAX_ITER 30
 # define WINWIDTH 1080
 # define WINHEIGHT 720
@@ -32,7 +32,6 @@
 # define KEY_XBUTT 17
 # define MOUSE_WHL_DWN 5
 # define MOUSE_WHL_UP 4
-
 
 typedef struct s_complex
 {
@@ -49,12 +48,12 @@ typedef struct s_mlx_data
 	int			bpp;
 	int			linelen;
 	int			endian;
-	long double	MINX;
-	long double	MAXX;
-	long double	MINI;
-	long double	MAXI;
-	long double	SCALE_X;
-	long double	SCALE_Y;
+	long double	minx;
+	long double	maxx;
+	long double	mini;
+	long double	maxi;
+	long double	scale_x;
+	long double	scale_y;
 	int			r_fact;
 	int			g_fact;
 	int			b_fact;

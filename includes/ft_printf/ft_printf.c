@@ -1,22 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstdelone.c                                     :+:      :+:    :+:   */
+/*   ft_printf.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bthomas <bthomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/14 15:41:55 by bthomas           #+#    #+#             */
-/*   Updated: 2024/04/14 15:44:26 by bthomas          ###   ########.fr       */
+/*   Created: 2024/05/28 12:12:01 by bthomas           #+#    #+#             */
+/*   Updated: 2024/05/28 13:38:35 by bthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "ft_printf.h"
 
-void	ft_lstdelone(t_list *lst, void (*del)(void *))
+static void	init_data(t_data *data, const char *format)
 {
-	if (!lst || !del)
-		return ;
-	(del)(lst->content);
-	free(lst);
-	lst = NULL;
+	data->fmt = format;
+	data->fmt_idx = 0;
+	data->len_out = 0;
+	data->varg_len = 0;
+	reset_flags(data);
+}
+
+int	ft_printf(const char *format, ...)
+{
+	t_data	data;
+
+	if (BUFF_SIZE <= 0 || !format)
+		return (-1);
+	va_start(data.ap, format);
+	init_data(&data, format);
+	if (parse_fmt(&data))
+		return (-1);
+	return (data.len_out);
 }

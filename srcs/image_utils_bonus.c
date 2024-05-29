@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "ft_fractol.h"
-#include <stdio.h>
 
 void	init_colours(t_mlx_data *mlx)
 {
@@ -36,7 +35,7 @@ int	colour_shift(int button, t_mlx_data *mlx)
 		mlx->b_fact--;
 	else
 		return (0);
-	printf("r_fact: %d g_fact: %d b_fact: %d\n", mlx->r_fact, mlx->g_fact,
+	ft_printf("r_fact: %d g_fact: %d b_fact: %d\n", mlx->r_fact, mlx->g_fact,
 		mlx->b_fact);
 	refresh_image(mlx);
 	return (0);
