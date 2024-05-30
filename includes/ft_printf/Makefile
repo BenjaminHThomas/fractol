@@ -6,7 +6,7 @@
 #    By: bthomas <bthomas@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/14 14:29:18 by bthomas           #+#    #+#              #
-#    Updated: 2024/05/29 13:10:55 by bthomas          ###   ########.fr        #
+#    Updated: 2024/05/30 10:51:24 by bthomas          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -50,8 +50,7 @@ $(LIBFT):
 	@$(MAKE) -sC $(LIBFT_PATH)
 
 $(NAME): $(OFILES) $(LIBFT)
-	@cp $(LIBFT) $(NAME)
-	@$(AR) $(ARFLAGS) $(NAME) $^ 
+	@$(AR) $(ARFLAGS) $(NAME) $^
 
 clean:
 	@rm -rf $(OBJ_DIR)

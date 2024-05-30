@@ -25,10 +25,15 @@ MLX = $(MLXDIR)$(MLX_LIB)
 PRINTF_LIB	= libftprintf.a
 PRINTF_DIR	= ./includes/ft_printf/
 PRINTF		= $(PRINTF_DIR)$(PRINTF_LIB)
+LIBFTDIR	= $(PRINTF_DIR)libft
 
-INCS =	-I ./includes/\
-		-I ./includes/ft_printf\
-		-I ./minilibx-linux/
+INCS	=	-I $(LIBFTDIR)\
+			-I ./includes/\
+			-I ./includes/ft_printf\
+			-I ./minilibx-linux/\
+
+LINKS	= -L$(PRINTF_DIR) -lftprintf \
+		  -L$(LIBFTDIR) -lft
 
 all: $(OBJDIR) $(MLX) $(PRINTF) $(NAME)
 
@@ -49,7 +54,7 @@ $(PRINTF):
 	@make -sC $(PRINTF_DIR)
 
 $(NAME): $(OBJS) $(MLX) $(PRINTF)
-	@$(COMPILER) $(CFLAGS) -o $(NAME) $(OBJS) $(MLX) $(PRINTF) -lXext -lX11 -lm
+	@$(COMPILER) $(CFLAGS) -o $(NAME) $(OBJS) $(LINKS) $(MLX) $(PRINTF) -lXext -lX11 -lm
 
 clean:
 	@echo "Cleaning objects..."
