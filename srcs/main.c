@@ -60,15 +60,15 @@ int	main(int ac, char **av)
 		return (exit_help());
 	if (*av[1] != 'm' && *av[1] != 'b' && *av[1] != 'j')
 		return (exit_help());
-	ft_putendl_fd("initialising...", 1);
+	ft_printf("initialising...\n");
 	if (initialise(&mlx, av, ac))
 	{
 		ft_putendl_fd("Error: failed mlx malloc.", 2);
 		return (1);
 	}
-	ft_putendl_fd("filling image...", 1);
+	ft_printf("filling image...\n");
 	fill_image(&mlx);
-	ft_putendl_fd("putting image to window...", 1);
+	ft_printf("putting image to window...\n");
 	mlx_put_image_to_window(mlx.mlx, mlx.win, mlx.img, 0, 0);
 	attach_hooks(&mlx);
 	mlx_loop(mlx.mlx);

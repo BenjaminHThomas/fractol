@@ -20,14 +20,14 @@ static void	print_instructions(void)
 
 	s1 = "Here are the parameters:\n\tm: mandelbrot set\n\tj: Julia set\n"
 		"\tb: burning ship set\n";
-	ft_putstr_fd(s1, 1);
+	ft_printf("%s\n", s1);
 	s2 = "\nFor the julia set please include the 2 starting parameters.\n"
 		"I recommend values between 1.0 & -1.0\n\n";
-	ft_putstr_fd(s2, 1);
+	ft_printf("%s\n", s2);
 	s3 = "You can adjust rgb values with:"
 		"\n\tr: q-- w++\n\tg: a-- s++\n\tb: z-- x++\n"
 		"\nUse + & - to adjust the precision,\nand arrow keys for direction.";
-	ft_putstr_fd(s3, 1);
+	ft_printf("%s\n", s3);
 }
 
 int	exit_help(void)
