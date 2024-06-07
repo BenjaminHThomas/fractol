@@ -28,6 +28,7 @@ static void	print_instructions(void)
 		"\n\tr: q-- w++\n\tg: a-- s++\n\tb: z-- x++\n"
 		"\nUse + & - to adjust the precision,\nand arrow keys for direction.";
 	ft_printf("%s\n", s3);
+	ft_printf("Use the mouse wheel to zoom in and out.\n");
 }
 
 int	exit_help(void)
