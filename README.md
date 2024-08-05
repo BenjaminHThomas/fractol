@@ -6,8 +6,7 @@
 
 This is project to create an interactive Mandelbrot and Julia set in C using 42's minilibx API (X11).
 
-It's not just a cool fractal that you'd see hanging on your stoner cousins wall, but actually an interesting mathematical concept. 
-Please bear in mind however that I'm a former commerce grad, not a mathematician so the explanations may not be 100%.
+It's not just a cool fractal that you'd see hanging on your stoner cousins wall, but actually an interesting mathematical concept.
 
 ## Introduction
 
@@ -26,11 +25,12 @@ There's a really interesting video by veritasium here if you're interested:
 \t https://www.youtube.com/watch?v=cUzklzVXJwo
 
 And that's where the central idea comes into play:
-- Julia sets:        when iterating values of z, which are stable and which iterate to infinity?
-- Mandelbrot sets:   when iterating values of c, which are stable and which iterate to infinity?
+  when iterating values of z, which are stable and which iterate to infinity?
 
 When you plot the values on a 2d plane, with the x-axis being real values (-1,0,1....n)
 and the y-axis being complex imaginary values (-i, 0, i, 2i, 3i .... ni) (i = sqrt(-1)), you get graphs similar to the first image (mandelbrot) or like the below (Julia).
+
+The formula changes between different fractals but the underlying principle is the same.
 
 <p align="center">
   <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/JuliaSet.35.png/1920px-JuliaSet.35.png" />
