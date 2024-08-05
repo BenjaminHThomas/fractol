@@ -16,7 +16,7 @@ The underlying function behind the graph is:
 so for example if z == 2 & c == 0, iterating this function would look like:
   4, 16, 256, 65536 .... and so on until infinity.
 
-c is a complex numer. A complex number has a real component and an imaginary component. c = a + bi with i being equal to the square root of -1.
+c is a complex number. A complex number has a real component and an imaginary component. c = a + bi with i being equal to the square root of -1.
 If you're the same as me, you were probably quite confused by this because negative square roots aren't really possible. But that's the whole point, it's an abstraction.
 The same way negative numbers aren't real, but they help us understand things better.
 The important thing to remember is that i^2 = -1. Or it reverses the sign each time it's multiplied.
