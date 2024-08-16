@@ -4,9 +4,9 @@
   <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Mandel_zoom_00_mandelbrot_set.jpg/1280px-Mandel_zoom_00_mandelbrot_set.jpg" />
 </p>
 
-This is project to create an interactive Mandelbrot and Julia set in C using 42's minilibx API (X11). Depending on the processing power of your computer, you can zoom in quite far and inspect the different regions of the sets (I have wasted way too much time playing with this). It could have been optimised further by multi-threading but it was outside the scope of this project.
-
 It's not just a cool fractal that you'd see hanging on your stoner cousins wall, but actually an interesting mathematical concept.
+
+This is project to create an interactive Mandelbrot and Julia set in C using 42's minilibx API (X11). Depending on the processing power of your computer, you can zoom in quite far and inspect the different regions of the sets (I have wasted way too much time playing with this). It could have been optimised further by multi-threading but it was outside the scope of this project.
 
 ## Introduction
 
